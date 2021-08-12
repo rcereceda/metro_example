@@ -7,6 +7,17 @@ class Train
     @destination = destination
     @routes = Hash.new { |hash, key| hash[key] = [] }
 
+    search_routes
+  end
+
+  def search_routes
+    return unless valid_route?
+
+    paths(origin, destination)
+
+    return unless complete_routes.empty?
+
+    Station.switch
     paths(origin, destination)
   end
 
@@ -15,8 +26,6 @@ class Train
   end
 
   def paths(origin, destination, result = [])
-    return if origin.empty? || destination.empty? || origin == destination
-
     node = Station.find(destination.downcase)
 
     node.parents.each do |parent|
@@ -68,7 +77,7 @@ class Train
   end
 
   def complete_routes
-    return if @routes.empty?
+    return [] if @routes.empty?
 
     @routes.select do |_k, v|
       v.include?(origin) && v.include?(destination)
@@ -79,5 +88,20 @@ class Train
     return 0 if @routes.empty?
 
     @routes.map { |k, _v| k }.max + 1
+  end
+
+  def valid_route?
+    return unless valid_stations?
+
+    a = Station.find(origin.downcase)
+    b = Station.find(destination.downcase)
+
+    colors.include?(a.color) && colors.include?(b.color)
+  end
+
+  def valid_stations?
+    !origin.empty? &&
+      !destination.empty? &&
+      origin.downcase != destination.downcase
   end
 end

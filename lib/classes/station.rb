@@ -18,6 +18,16 @@ class Station
     @all.find { |station| station.id == id }
   end
 
+  def self.switch
+    all.each do |station|
+      parents   = station.parents
+      childrens = station.childrens
+
+      station.parents   = childrens
+      station.childrens = parents
+    end
+  end
+
   def self.prepare_network
     NODES.each do |station|
       Station.new(

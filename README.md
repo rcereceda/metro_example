@@ -4,7 +4,7 @@ Simple metro example written in Ruby.
 
 This program allows you to calculate the route with the fewest number of stations between two stations in a metro network. In the metro network, some stations may have an associated color (red or green) that indicates that a green express train will only pass through stations without color or green, and a red express train will pass only through stations without color or red.
 
-**Note**: At the moment, this example only allows you to find the shortest path in a single direction of the graph.
+**Note**: At the moment, this example only allows you to find the shortest path in a single direction of the graph, from left to right or right to left.
 
 ## Usage
 
@@ -40,14 +40,14 @@ NODES = [
 ].freeze
 ```
 
-If you want to get the shortest route between two stations, it is necessary to have an instance of the Train class indicating the origin and destination station (the color is optional):
+If you want to get the shortest route between two stations, it's necessary to have an instance of the Train class indicating the origin and destination station (the color is optional):
 
 ```
 train = Train.new('A', 'F', 'green')
 
 ```
 
-In order to get the shortest route, you can test with the **shortest_path** method:
+In order to get the shortest path, you can test with the **shortest_path** method:
 
 ```
 train.shortest_path
